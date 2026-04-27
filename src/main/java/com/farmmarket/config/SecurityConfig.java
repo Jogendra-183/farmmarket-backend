@@ -77,20 +77,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Allow frontend development server origins and production
-        List<String> allowedOrigins = new ArrayList<>(Arrays.asList(
-                "http://localhost:5173",
-                "http://localhost:5174",
-                "http://localhost:3000",
-                "http://localhost:4173",
-                "http://127.0.0.1:5173",
-                "http://127.0.0.1:5174"
-        ));
-        // Add production origins from environment variable
-        if (corsAllowedOrigins != null && !corsAllowedOrigins.isEmpty()) {
-            allowedOrigins.addAll(Arrays.asList(corsAllowedOrigins.split(",")));
-        }
-        configuration.setAllowedOrigins(allowedOrigins);
+        // Allow all origins via pattern for production/development
+        configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setExposedHeaders(List.of("Authorization"));
